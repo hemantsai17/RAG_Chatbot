@@ -1,0 +1,27 @@
+# Use an official Python image as base
+FROM python:3.10
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy requirements.txt and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the entire project
+COPY . .
+
+# Set Python path to include the src directory
+ENV PYTHONPATH=/app/src
+
+ENV PINECONE_API_KEY='pcsk_4P216v_EKz8EXoEXsNzeihRExmy1zSkEvWBx52Sc6h1fqaSHciNozY27sn48FdjKfrNdDi'
+
+ENV OLLAMA_HOST=0.0.0.0:8080
+
+# Copy .env file (if it exists)
+COPY .env .env
+
+
+
+# Run FastAPI server with environment variables
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]

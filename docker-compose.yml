@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: backend
+    environment:
+      OLLAMA_HOST: "https://ollama-231317849456.asia-south1.run.app/"
+      PINECONE_API_KEY: "pcsk_4P216v_EKz8EXoEXsNzeihRExmy1zSkEvWBx52Sc6h1fqaSHciNozY27sn48FdjKfrNdDi"
+    depends_on:
+      - ollama
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: ./chatbot_ui
+      dockerfile: Dockerfile.frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    image: ollama/ollama
+    container_name: ollama
+    environment:
+      OLLAMA_HOST: "https://ragchatbotbackend-231317849456.asia-south1.run.app/"
+    networks:
+      - app_network
+    command: "serve"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  app_network:
+    driver: bridge
