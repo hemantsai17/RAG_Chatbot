@@ -1,0 +1,20 @@
+# Ignore node_modules (since we install fresh inside Docker)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore build artifacts
+build/
+dist/
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore Git
+.git
+.gitignore
+
+# Ignore Docker-related files
+Dockerfile
+Dockerfile.frontend

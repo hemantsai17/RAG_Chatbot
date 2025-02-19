@@ -1,0 +1,12 @@
+artifacts_root: artifacts
+
+data_ingestion : 
+    root_dir: artifacts/data_ingestion
+    get_docs: docs/
+
+RAG:
+    model: installed_model/Llama-3.2-3B-Instruct
+    tokenizer: installed_model/Llama-3.2-3B-Instruct-tokenzer
+    sentence_model : sentence-transformers/all-MiniLM-L6-v2
+
+

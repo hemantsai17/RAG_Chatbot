@@ -1,0 +1,13 @@
+FROM ollama/ollama:latest
+
+# Override Ollama's default port (11434) to Cloud Run's required port (8080)
+ENV OLLAMA_HOST=0.0.0.0:8080
+
+ENV  OLLAMA_MDOELS /OLLAMA_MDOELS
+
+ENV OLLAMA_DEBUG false
+
+RUN ollama serve & sleep 5  && ollama pull llama3.2:3b
+
+# Start the Ollama server
+ENTRYPOINT [ "ollama","serve" ]
